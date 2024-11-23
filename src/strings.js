@@ -4,7 +4,7 @@ export default {
     previousQuestionButton: 'Предыдущий вопрос',
     showStatisticsButton: 'Показать статистику',
     clearStatisticsButton: 'Очистить статистику',
-    quizTitle: 'Quiz',
+    quizTitle: 'Ежемесячное собрание отдела разработки',
     enterNamePlaceholder: 'Введите ваше имя',
     questionText: 'Вопрос:',
     statisticsTitle: 'Статистика',
