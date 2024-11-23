@@ -1,18 +1,18 @@
 <template>
     <div class="quiz-container">
-      <h1 class="quiz-title">Quiz</h1>
+      <h1 class="quiz-title">{{ strings.quizTitle }}</h1>
       <div v-if="!isJoined" class="join-container">
-        <input v-model="userName" placeholder="Введите ваше имя" class="input-field" />
-        <button @click="joinQuiz" class="join-button">Присоединиться</button>
+        <input v-model="userName" :placeholder="strings.enterNamePlaceholder" class="input-field" />
+        <button @click="joinQuiz" class="join-button">{{ strings.joinButton }}</button>
       </div>
       <div v-if="isAdmin" class="admin-controls">
-        <button @click="nextQuestion" class="control-button">Следующий вопрос</button>
-        <button @click="previousQuestion" class="control-button">Предыдущий вопрос</button>
-        <button @click="toggleStatistics" class="control-button">Показать статистику</button>
-        <button @click="clearStatistics" class="control-button">Очистить статистику</button>
+        <button @click="previousQuestion" class="control-button">{{ strings.previousQuestionButton }}</button>
+        <button @click="nextQuestion" class="control-button">{{ strings.nextQuestionButton }}</button>
+        <button @click="toggleStatistics" class="control-button">{{ strings.showStatisticsButton }}</button>
+        <button @click="clearStatistics" class="control-button">{{ strings.clearStatisticsButton }}</button>
       </div>
       <div v-if="question" class="question-container">
-        <h2 class="question-text">{{ question.text }}</h2>
+        <h2 class="question-text">{{ strings.questionText }} {{ question.text }}</h2>
         <ul class="options-list">
           <li v-for="(option, index) in question.options" :key="index" class="option-item">
             <input type="radio" :value="index" v-model="selectedAnswer" @change="submitAnswer" class="radio-input" />
@@ -21,10 +21,10 @@
         </ul>
       </div>
       <div v-if="showStatistics" class="statistics-container">
-        <h2 class="statistics-title">Статистика</h2>
+        <h2 class="statistics-title">{{ strings.statisticsTitle }}</h2>
         <ul class="statistics-list">
           <li v-for="(count, user) in statistics" :key="user" class="statistics-item">
-            {{ user }}: {{ count }} правильных ответов
+            {{ user }}: {{ count }} {{ strings.correctAnswers }}
           </li>
         </ul>
       </div>
@@ -33,6 +33,7 @@
   
   <script>
   import * as signalR from '@microsoft/signalr';
+  import strings from '@/strings';
   
   export default {
     data() {
@@ -44,7 +45,8 @@
         selectedAnswer: null,
         statistics: null,
         showStatistics: false,
-        connection: null
+        connection: null,
+        strings
       };
     },
     watch: {
