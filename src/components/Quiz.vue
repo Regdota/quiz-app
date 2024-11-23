@@ -8,7 +8,8 @@
       <div v-if="isAdmin" class="admin-controls">
         <button @click="nextQuestion" class="control-button">Следующий вопрос</button>
         <button @click="previousQuestion" class="control-button">Предыдущий вопрос</button>
-        <button @click="getStatistics" class="control-button">Показать статистику</button>
+        <button @click="toggleStatistics" class="control-button">Показать статистику</button>
+        <button @click="clearStatistics" class="control-button">Очистить статистику</button>
       </div>
       <div v-if="question" class="question-container">
         <h2 class="question-text">{{ question.text }}</h2>
@@ -19,7 +20,7 @@
           </li>
         </ul>
       </div>
-      <div v-if="statistics" class="statistics-container">
+      <div v-if="showStatistics" class="statistics-container">
         <h2 class="statistics-title">Статистика</h2>
         <ul class="statistics-list">
           <li v-for="(count, user) in statistics" :key="user" class="statistics-item">
@@ -42,6 +43,7 @@
         question: null,
         selectedAnswer: null,
         statistics: null,
+        showStatistics: false,
         connection: null
       };
     },
@@ -84,8 +86,14 @@
       previousQuestion() {
         this.connection.invoke('PreviousQuestion');
       },
-      getStatistics() {
-        this.connection.invoke('GetStatistics');
+      toggleStatistics() {
+        this.showStatistics = !this.showStatistics;
+        if (this.showStatistics) {
+          this.connection.invoke('GetStatistics');
+        }
+      },
+      clearStatistics() {
+        this.connection.invoke('ClearStatistics');
       }
     }
   };
