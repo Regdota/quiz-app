@@ -12,7 +12,7 @@
         <button @click="clearStatistics" class="control-button">{{ strings.clearStatisticsButton }}</button>
       </div>
       <div v-if="question" class="question-container">
-        <h2 class="question-text">{{ strings.questionText }} {{ question.text }}</h2>
+        <h2 class="question-text">{{ question.text }}</h2>
         <ul class="options-list">
           <li v-for="(option, index) in question.options" :key="index" class="option-item">
             <input type="radio" :value="index" v-model="selectedAnswer" @change="submitAnswer" class="radio-input" />
@@ -23,7 +23,7 @@
       <div v-if="showStatistics" class="statistics-container">
         <h2 class="statistics-title">{{ strings.statisticsTitle }}</h2>
         <ul class="statistics-list">
-          <li v-for="(count, user) in statistics" :key="user" class="statistics-item">
+          <li v-for="(count, user) in sortedStatistics" :key="user" class="statistics-item">
             {{ user }}: {{ count }} {{ strings.correctAnswers }}
           </li>
         </ul>
@@ -52,6 +52,14 @@
     watch: {
       userName(newName) {
         localStorage.setItem('userName', newName);
+      }
+    },
+    computed: {
+      sortedStatistics() {
+        if (!this.statistics) return {};
+        return Object.fromEntries(
+          Object.entries(this.statistics).sort(([,a],[,b]) => b - a)
+        );
       }
     },
     methods: {
