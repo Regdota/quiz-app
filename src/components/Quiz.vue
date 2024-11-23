@@ -18,8 +18,8 @@
         <h2 class="question-text">{{ question.text }}</h2>
         <ul class="options-list">
           <li v-for="(option, index) in question.options" :key="index" class="option-item">
-            <input type="radio" :value="index" v-model="selectedAnswer" @change="submitAnswer" class="radio-input" />
-            <label class="option-label">{{ option }}</label>
+            <input type="radio" :id="'option-' + index" :value="index" v-model="selectedAnswer" class="radio-input" />
+            <label :for="'option-' + index" class="option-label" @click="selectAnswer(index)">{{ option }}</label>
           </li>
         </ul>
       </div>
@@ -30,6 +30,7 @@
             {{ user }}: {{ count }} {{ strings.correctAnswers }}
           </li>
         </ul>
+        <div v-if="Object.keys(sortedStatistics).length === 0" class="statistics-item">Победить может каждый</div>
       </div>
     </div>
   </template>
@@ -90,8 +91,14 @@
           }
         }).catch(err => console.error(err.toString()));
       },
+      selectAnswer(answerIndex) {
+        this.selectedAnswer = answerIndex;
+        this.submitAnswer();
+      },
       submitAnswer() {
-        this.connection.invoke('SubmitAnswer', this.userName, this.selectedAnswer);
+        if (this.selectedAnswer !== null) {
+          this.connection.invoke('SubmitAnswer', this.userName, this.selectedAnswer);
+        }
       },
       nextQuestion() {
         this.connection.invoke('NextQuestion');
