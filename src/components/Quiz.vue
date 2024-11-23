@@ -1,17 +1,20 @@
 <template>
     <div class="quiz-container">
+      <div class="logo-block">
+        <img src="/logo.png" alt="Quiz Logo" class="quiz-logo" />
+      </div>
       <h1 class="quiz-title">{{ strings.quizTitle }}</h1>
       <div v-if="!isJoined" class="join-container">
         <input v-model="userName" :placeholder="strings.enterNamePlaceholder" class="input-field" />
         <button @click="joinQuiz" class="join-button">{{ strings.joinButton }}</button>
       </div>
-      <div v-if="isAdmin" class="admin-controls">
+      <div v-if="isAdmin" class="admin-controls-block">
         <button @click="previousQuestion" class="control-button">{{ strings.previousQuestionButton }}</button>
         <button @click="nextQuestion" class="control-button">{{ strings.nextQuestionButton }}</button>
         <button @click="toggleStatistics" class="control-button">{{ strings.showStatisticsButton }}</button>
         <button @click="clearStatistics" class="control-button">{{ strings.clearStatisticsButton }}</button>
       </div>
-      <div v-if="question" class="question-container">
+      <div v-if="question" class="question-block">
         <h2 class="question-text">{{ question.text }}</h2>
         <ul class="options-list">
           <li v-for="(option, index) in question.options" :key="index" class="option-item">
@@ -20,7 +23,7 @@
           </li>
         </ul>
       </div>
-      <div v-if="showStatistics" class="statistics-container">
+      <div v-if="showStatistics" class="statistics-block">
         <h2 class="statistics-title">{{ strings.statisticsTitle }}</h2>
         <ul class="statistics-list">
           <li v-for="(count, user) in sortedStatistics" :key="user" class="statistics-item">
@@ -112,7 +115,7 @@
   <style scoped>
   body {
     font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
   }
@@ -121,11 +124,22 @@
     text-align: center;
     padding: 20px;
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 50px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 20px auto;
     animation: fadeIn 1s ease-in-out;
+  }
+  
+  .logo-block {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #dadce8;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-logo {
+    width: 100px;
+    height: auto;
   }
   
   @keyframes fadeIn {
@@ -158,31 +172,31 @@
   }
   
   .join-container {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     animation: fadeIn 0.5s ease-in-out;
   }
   
   .input-field {
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 0;
     font-size: 16px;
     width: 200px;
     transition: border-color 0.3s;
   }
   
   .input-field:focus {
-    border-color: #e74c3c;
+    border-color: #fc3e6c;
     outline: none;
   }
   
   .join-button, .control-button {
     padding: 10px 20px;
-    background-color: #e74c3c;
+    background-color: #fc3e6c;
     color: #ffffff;
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
     font-size: 16px;
     margin: 5px;
@@ -190,17 +204,23 @@
   }
   
   .join-button:hover, .control-button:hover {
-    background-color: #c0392b;
+    background-color: #e0315f;
     transform: scale(1.05);
   }
   
-  .admin-controls {
-    margin-bottom: 20px;
+  .admin-controls-block {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #dadce8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease-in-out;
   }
   
-  .question-container {
-    margin-bottom: 20px;
+  .question-block {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #dadce8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease-in-out;
   }
   
@@ -214,6 +234,7 @@
   .options-list {
     list-style-type: none;
     padding: 0;
+    text-align: left;
   }
   
   .option-item {
@@ -230,8 +251,11 @@
     color: #333333;
   }
   
-  .statistics-container {
-    margin-top: 20px;
+  .statistics-block {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #dadce8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     animation: fadeIn 0.5s ease-in-out;
   }
   
@@ -254,3 +278,4 @@
     animation: fadeIn 0.5s ease-in-out;
   }
   </style>
+  
