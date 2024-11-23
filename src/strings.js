@@ -8,5 +8,6 @@ export default {
     enterNamePlaceholder: 'Введите ваше имя',
     questionText: 'Вопрос:',
     statisticsTitle: 'Статистика',
-    correctAnswers: 'правильных ответов'
+    correctAnswers: 'правильных ответов',
+    everyoneCanWin: 'Победить может каждый'
   };

@@ -26,11 +26,14 @@
       <div v-if="showStatistics" class="statistics-block">
         <h2 class="statistics-title">{{ strings.statisticsTitle }}</h2>
         <ul class="statistics-list">
+          <li v-if="Object.keys(statistics).length === 0" class="statistics-item">
+            {{ strings.everyoneCanWin }}
+          </li>
           <li v-for="(count, user) in sortedStatistics" :key="user" class="statistics-item">
             {{ user }}: {{ count }} {{ strings.correctAnswers }}
           </li>
         </ul>
-        <div v-if="Object.keys(sortedStatistics).length === 0" class="statistics-item">Победить может каждый</div>
+        
       </div>
     </div>
   </template>
